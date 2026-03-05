@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+@import "katex/dist/katex.min.css";
+
+@theme {
+  --font-sans: "Inter", "Noto Sans Bengali", ui-sans-serif, system-ui, sans-serif;
+  --font-bengali: "Noto Sans Bengali", sans-serif;
+  
+  --color-primary: #008080;
+  --color-primary-dark: #006666;
+  --color-primary-light: #e6f2f2;
+  
+  /* Standard hex colors to avoid oklch issues with html2canvas */
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+  
+  --color-emerald-50: #ecfdf5;
+  --color-emerald-500: #10b981;
+  --color-emerald-600: #059669;
+}
+
+@layer base {
+  body {
+    @apply font-sans text-slate-900 bg-slate-50 transition-colors duration-300;
+  }
+}
+
+.input-field::placeholder {
+  @apply text-slate-400;
+}
+
+.bengali-text {
+  font-family: var(--font-bengali);
+}
+
+.glass-card {
+  @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-xl;
+}
+
+.btn-teal {
+  @apply bg-primary hover:bg-primary-dark text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg active:scale-95 disabled:opacity-50 disabled:pointer-events-none;
+}
+
+.input-field {
+  @apply w-full px-4 py-2 rounded-lg border border-primary/20 focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition-all duration-200 bg-white;
+}
+
+.sidebar-item {
+  @apply flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 cursor-pointer;
+}
+
+.sidebar-item.active {
+  @apply bg-primary text-white shadow-lg shadow-primary/30;
+}
+
+.sidebar-item:not(.active) {
+  @apply text-slate-600 hover:bg-primary-light hover:text-primary;
+}
