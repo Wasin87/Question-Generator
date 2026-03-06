@@ -23,11 +23,7 @@ import QuestionPreview from './QuestionPreview';
 import { useAppContext } from '../context/AppContext';
 import { translations } from '../translations';
 
-interface GeneratorProps {
-  onGenerated: () => void;
-}
-
-export default function Generator({ onGenerated }: GeneratorProps) {
+export default function Generator() {
   const { language } = useAppContext();
   const t = translations[language];
   
@@ -164,23 +160,8 @@ export default function Generator({ onGenerated }: GeneratorProps) {
         throw new Error("AI failed to generate a valid question array");
       }
 
-      // Save to history via backend
-      const saveRes = await fetch('/api/save-questions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...formData,
-          questions
-        })
-      });
-
-      if (!saveRes.ok) {
-        console.warn("Failed to save questions to history, but generation succeeded.");
-      }
-      
       setGeneratedQuestions(questions);
       setStep(3);
-      onGenerated();
       toast.success(language === 'bn' ? 'প্রশ্নপত্র সফলভাবে তৈরি হয়েছে!' : 'Question paper generated successfully!');
     } catch (error: any) {
       console.error('Generation Error:', error);
