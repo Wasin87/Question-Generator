@@ -8,7 +8,20 @@ export default defineConfig(({mode}) => {
   return {
     plugins: [react(), tailwindcss()],
     define: {
-      'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY),
+      'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY || process.env.GEMINI_API_KEY),
+    },
+    build: {
+      chunkSizeWarningLimit: 2000,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            vendor: ['react', 'react-dom', 'motion'],
+            pdf: ['jspdf', 'html2canvas', 'jspdf-autotable'],
+            utils: ['lucide-react', 'date-fns', 'clsx', 'tailwind-merge'],
+            ai: ['@google/genai']
+          }
+        }
+      }
     },
     resolve: {
       alias: {

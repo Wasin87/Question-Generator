@@ -68,9 +68,11 @@ export default function Generator() {
 
     setIsGenerating(true);
     try {
-      const apiKey = process.env.GEMINI_API_KEY;
+      const apiKey = process.env.GEMINI_API_KEY || import.meta.env.VITE_GEMINI_API_KEY;
+      console.log('API Key configured:', !!apiKey);
+      
       if (!apiKey) {
-        throw new Error("Gemini API key is not configured.");
+        throw new Error(language === 'bn' ? "Gemini API key কনফিগার করা নেই।" : "Gemini API key is not configured.");
       }
 
       const ai = new GoogleGenAI({ apiKey });
@@ -121,8 +123,10 @@ export default function Generator() {
         ]
       `;
 
+      console.log('Generating questions with topic:', formData.topic);
+      
       const response = await ai.models.generateContent({
-        model: "gemini-3-flash-preview",
+        model: "gemini-1.5-flash",
         contents: prompt,
         config: {
           responseMimeType: "application/json",
@@ -150,6 +154,8 @@ export default function Generator() {
         }
       });
 
+      console.log('AI Response received');
+      
       if (!response.text) {
         throw new Error("AI returned an empty response");
       }
